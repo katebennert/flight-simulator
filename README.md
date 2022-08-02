@@ -1,4 +1,4 @@
-# :beers: Beer Punk: Flight Simulator :beers:
+# :beers: Brew Punk: Flight Simulator :beers:
 
 The Beer Punk: Flight Simulator is a single page web application that helps you find beer that we think you'll enjoy using Brewdog's extensive database of craft beers in their public [Punk API](https://punkapi.com/). 
 
