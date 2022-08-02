@@ -83,10 +83,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 abv = 4;
         }
 
-        return fetch(`https://api.punkapi.com/v2/beers?ebc_gt=${ebcLow}&ebc_lt=${ebcHigh}&ibu_gt=${ibuLow}&ibu_lt=${ibuHigh}&abv_gt=${abvLow}&abv_lt=${abvHigh}`)
-        // return fetch("https://api.punkapi.com/v2/beers?ibu_lt=100&ibu_gt=60")
+        fetch(`https://api.punkapi.com/v2/beers?ebc_gt=${ebcLow}&ebc_lt=${ebcHigh}&ibu_gt=${ibuLow}&ibu_lt=${ibuHigh}&abv_gt=${abvLow}&abv_lt=${abvHigh}`)
         .then((resp) => resp.json())
-        .then(data => console.log(data));
+        .then(data => {
+            data[0] ? console.log(data) : console.log("Your perfect beer doesn't exist (yet). Try again or try our random beer generator!")
+        })
     }
 
         
