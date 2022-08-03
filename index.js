@@ -83,11 +83,58 @@ document.addEventListener("DOMContentLoaded", () => {
                 abv = 4;
         }
 
-        fetch(`https://api.punkapi.com/v2/beers?ebc_gt=${ebcLow}&ebc_lt=${ebcHigh}&ibu_gt=${ibuLow}&ibu_lt=${ibuHigh}&abv_gt=${abvLow}&abv_lt=${abvHigh}`)
+         return fetch(`https://api.punkapi.com/v2/beers?ebc_gt=${ebcLow}&ebc_lt=${ebcHigh}&ibu_gt=${ibuLow}&ibu_lt=${ibuHigh}&abv_gt=${abvLow}&abv_lt=${abvHigh}`)
         .then((resp) => resp.json())
-        .then(data => {
-            data[0] ? console.log(data) : console.log("Your perfect beer doesn't exist (yet). Try again or try our random beer generator!")
-        })
+        .then((beerData) => {
+            if(beerData[0]) {
+                for (let beer of beerData) {
+                    buildABeer(beer);
+                    console.log(beer);
+                }
+            } else {
+                console.log("Your perfect beer doesn't exist (yet). Try again or try our random beer generator!");
+            }
+        });
+    }
+
+    function buildABeer(beer) {
+        const flipCard = document.createElement("div");
+        flipCard.setAttribute("class", "flip-card");
+        
+        const flipCardInner = document.createElement("div");
+        flipCardInner.setAttribute("class", "flip-card-inner");
+
+        const flipCardFront = document.createElement("div");
+        flipCardFront.setAttribute("class", "flip-card-front");
+
+        const beerImg = document.createElement("img");
+        beerImg.setAttribute("src", `${beer.image_url}`);
+        beerImg.setAttribute("alt", `${beer.name}`);
+        beerImg.setAttribute("style","width:300px;height:300px;");
+
+        const flipCardBack = document.createElement("div");
+        flipCardBack.setAttribute("class", "flip-card-back");
+
+        // beer info
+        const beerName = document.createElement("h1");
+        beerName.innerText = `${beer.name}`;
+        const beerTagLine = document.createElement("p");
+        beerTagLine.innerText = `${beer.tagline}`;
+        const beerDescription = document.createElement("p");
+        beerDescription.innerText = `${beer.description}`;
+        const beerFoodPairing = document.createElement("p");
+        beerFoodPairing.innerText = `${beer.food_pairing}`;
+
+        const beerResultsContainer = document.querySelector("#beer-results-container");
+
+        // appending elements to the beer results container
+        beerResultsContainer.appendChild(flipCard);
+        flipCard.appendChild(flipCardInner);
+        flipCardInner.appendChild(flipCardFront);
+        flipCardFront.appendChild(beerImg);
+        flipCardInner.appendChild(flipCardBack);
+        flipCardBack.append(beerName, beerTagLine, beerDescription, beerFoodPairing);
+
     }
 
         
