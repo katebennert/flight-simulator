@@ -53,3 +53,7 @@
     color: white;
     transform: rotateY(180deg);
   }
+
+  #food-pairing-list {
+    text-align: left;
+  }
