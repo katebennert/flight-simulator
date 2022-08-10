@@ -110,7 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const beerImg = document.createElement("img");
         beer.image_url ? beerImg.setAttribute("src", `${beer.image_url}`) : beerImg.setAttribute("src", `https://usercontent.one/wp/www.ndfletcher.org.uk/wp-content/uploads/2019/01/bd-logo.png`);
         beerImg.setAttribute("alt", `${beer.name}`);
-        beerImg.setAttribute("style","width:300px;height:300px;");
+        beerImg.setAttribute("class", "beer-img");
 
         const flipCardBack = document.createElement("div");
         flipCardBack.setAttribute("class", "flip-card-back");
