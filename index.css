@@ -33,8 +33,12 @@ select {
     color: white;
 }
 
+select:hover {
+    border-color: #b53fa7;
+}
+
 select > option {
-    color: white;
+    color: white; 
     text-align: center;
     font-size: 20px;
 }
