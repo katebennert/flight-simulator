@@ -110,12 +110,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const beerImg = document.createElement("img");
         beer.image_url ? beerImg.setAttribute("src", `${beer.image_url}`) : beerImg.setAttribute("src", `https://usercontent.one/wp/www.ndfletcher.org.uk/wp-content/uploads/2019/01/bd-logo.png`);
         beerImg.setAttribute("alt", `${beer.name}`);
-        beerImg.setAttribute("class", "beer-img");
+        beerImg.setAttribute("class", "beer-img"); 
 
         const flipCardBack = document.createElement("div");
         flipCardBack.setAttribute("class", "flip-card-back");
 
-        // beer info
+        // creating html elements for beer info
         const beerName = document.createElement("h1");
         beerName.innerText = `${beer.name}`;
         const beerTagLine = document.createElement("h3");
@@ -126,10 +126,15 @@ document.addEventListener("DOMContentLoaded", () => {
         h4.innerText = "Food Pairings:"
         const ul = document.createElement("ul");
         ul.setAttribute("id", "food-pairing-list");
+        const recipeBtn = document.createElement("button");
+        recipeBtn.setAttribute("class", "btn");
+        recipeBtn.setAttribute("id", "recipe-btn");
+        recipeBtn.innerText = "View Recipe";
+        recipeBtn.addEventListener("click", buildRecipeCard);
         
         const beerResultsContainer = document.querySelector("#beer-results-container");
 
-        // appending elements to the beer results container
+        // appending elements to the flip cards in beer results container
         beerResultsContainer.appendChild(flipCard);
         flipCard.appendChild(flipCardInner);
         flipCardInner.appendChild(flipCardFront);
@@ -141,7 +146,92 @@ document.addEventListener("DOMContentLoaded", () => {
             li.innerText = `${food}`;
             ul.appendChild(li);
         }
+        flipCardBack.append(recipeBtn);
+    
 
+        function buildRecipeCard(e) {
+            const beerRecipeContainer = document.querySelector("#beer-recipe-container");
+            beerRecipeContainer.setAttribute("class", "unhide-recipe-container");
+            // get's position of beer recipe container
+            let recipeContainerTop = window.scrollY + beerRecipeContainer.getBoundingClientRect().top;
+            window.scroll({
+                top: recipeContainerTop,
+                behavior: 'smooth'
+            });
+
+            const recipeName = document.createElement("h1");
+            recipeName.innerText = `${beer.name}`;
+            beerRecipeContainer.appendChild(recipeName);
+
+            const recipeContributer = document.createElement("h3");
+            recipeContributer.innerText = `Contributed by: ${beer.contributed_by.substring(0, beer.contributed_by.indexOf("<"))}`;
+            beerRecipeContainer.appendChild(recipeContributer);
+
+            const hops = document.createElement("p");
+            hops.innerText = `Hops and Additions:`;
+            beerRecipeContainer.appendChild(hops);
+
+            const hopsList = document.createElement("ul");
+            beerRecipeContainer.appendChild(hopsList);
+
+            for (let hop of beer.ingredients['hops']) {
+                let hopElement = document.createElement("li");
+                hopElement.innerText = `${hop.amount['value']} ${hop.amount['unit']} ${hop.name} hops, Add: ${hop.add}`;
+                hopsList.append(hopElement);
+            }
+            
+            const malt = document.createElement("p");
+            malt.innerText = "Malts:";
+            beerRecipeContainer.appendChild(malt);
+
+            const maltList = document.createElement("ul");
+            beerRecipeContainer.appendChild(maltList);
+
+            for (let malt of beer.ingredients['malt']) {
+                let maltElement = document.createElement("li");
+                maltElement.innerText = `${malt.amount['value']} ${malt.amount['unit']} ${malt.name} malt`;
+                maltList.append(maltElement);
+            }
+            
+            const yeast = document.createElement("p");
+            yeast.innerText = `Yeast: ${beer.ingredients['yeast']}`;
+            beerRecipeContainer.appendChild(yeast);
+
+            const boilVolume = document.createElement("p");
+            boilVolume.innerText = `Boil Volume: ${beer.boil_volume['value']} ${beer.boil_volume['unit']}`;
+            beerRecipeContainer.appendChild(boilVolume);
+
+            const yield = document.createElement("p");
+            yield.innerText = `Yield: ${beer.volume['value']} ${beer.volume['unit']}`;
+            beerRecipeContainer.appendChild(yield);
+
+            const fermentationTemp = document.createElement("p");
+            fermentationTemp.innerText = `Fermentation Temperature: ${beer.method['fermentation']['temp']['value']} ${beer.method['fermentation']['temp']['unit']}`;
+            beerRecipeContainer.appendChild(fermentationTemp);
+
+            const mashTempHead = document.createElement("p");
+            mashTempHead.innerText = "Mash Temperature(s):";
+            beerRecipeContainer.appendChild(mashTempHead);
+
+            const mashList = document.createElement("ol");
+            beerRecipeContainer.appendChild(mashList);
+            for (let mash of beer.method['mash_temp']) {
+                const mashTemp = document.createElement("li");
+                mashTemp.innerText = `Hold mash at ${mash.temp['value']} ${mash.temp['unit']} for ${mash['duration']} minutes.`;
+                mashList.appendChild(mashTemp);
+            }
+
+            if (beer.method['twist']) {
+                const twist = document.createElement("p");
+                twist.innerText = `Twist: ${beer.volume['value']} ${beer.volume['unit']}`;
+                beerRecipeContainer.appendChild(yield);
+            }
+
+            const brewersTip = document.createElement("p");
+            brewersTip.innerText = `Brewer's Tip: ${beer.brewers_tips}`;
+            beerRecipeContainer.appendChild(brewersTip);
+
+        }
     }
 
         

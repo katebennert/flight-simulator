@@ -142,3 +142,8 @@ select > option {
   #food-pairing-list {
     text-align: left;
   }
+
+  .unhide-recipe-container {
+    border: solid;
+    color: white;
+  }
