@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
         flipCardFront.setAttribute("class", "flip-card-front");
 
         const beerImg = document.createElement("img");
-        beer.image_url ? beerImg.setAttribute("src", `${beer.image_url}`) : beerImg.setAttribute("src", `https://i0.wp.com/www.craftbeerjoe.com/wp-content/uploads/2018/01/brewdog-logo-crest.jpg?fit=885%2C1024&ssl=1`);
+        beer.image_url ? beerImg.setAttribute("src", `${beer.image_url}`) : beerImg.setAttribute("src", `https://usercontent.one/wp/www.ndfletcher.org.uk/wp-content/uploads/2019/01/bd-logo.png`);
         beerImg.setAttribute("alt", `${beer.name}`);
         beerImg.setAttribute("style","width:300px;height:300px;");
 
@@ -118,12 +118,12 @@ document.addEventListener("DOMContentLoaded", () => {
         // beer info
         const beerName = document.createElement("h1");
         beerName.innerText = `${beer.name}`;
-        const beerTagLine = document.createElement("h4");
+        const beerTagLine = document.createElement("h3");
         beerTagLine.innerText = `${beer.tagline}`;
         const beerDescription = document.createElement("p");
         beerDescription.innerText = `${beer.description}`;
-        const h3 = document.createElement("h3");
-        h3.innerText = "Food Pairings:"
+        const h4 = document.createElement("h4");
+        h4.innerText = "Food Pairings:"
         const ul = document.createElement("ul");
         ul.setAttribute("id", "food-pairing-list");
         
@@ -133,9 +133,9 @@ document.addEventListener("DOMContentLoaded", () => {
         beerResultsContainer.appendChild(flipCard);
         flipCard.appendChild(flipCardInner);
         flipCardInner.appendChild(flipCardFront);
-        flipCardFront.appendChild(beerImg);
+        flipCardFront.append(beerImg, beerName);
         flipCardInner.appendChild(flipCardBack);
-        flipCardBack.append(beerName, beerTagLine, beerDescription, h3, ul);
+        flipCardBack.append(beerTagLine, beerDescription, h4, ul);
         for (let food of beer.food_pairing) {
             let li = document.createElement("li");
             li.innerText = `${food}`;
