@@ -6,8 +6,6 @@ The Beer Punk: Flight Simulator is a single page web application that helps you 
 
 There is no additional software required to run this app!
 
-(Note: update this if json server is added.)
-
 ## Usage
 
-The application will generate a "flight" of beer suggestions based on the user's preferences as a seasoned craft beer drinker. The user can then view each beer's profile which includes information about the beer's origin, food pairings, and a recipe for the bold few who'd like to try their hand at home brewing! 
+The application will generate a "flight" of beer suggestions based on the user's preferences as a seasoned craft beer drinker. The user can then view each beer's info card which includes information about the beer's tasting notes, food pairings, and a recipe button for the bold user who'd like to try some home brewing! 
