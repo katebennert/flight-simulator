@@ -154,6 +154,7 @@ document.addEventListener("DOMContentLoaded", () => {
             beerRecipeContainer.setAttribute("class", "unhide-recipe-container");
 
             const recipeName = document.createElement("h1");
+            recipeName.setAttribute("style", "font-family: 'Permanent Marker', cursive;");
             recipeName.innerText = `${beer.name}`;
             beerRecipeContainer.appendChild(recipeName);
 
@@ -227,8 +228,10 @@ document.addEventListener("DOMContentLoaded", () => {
             
             // gets position of beer recipe container
             let recipeContainerPos = beerRecipeContainer.getBoundingClientRect();
+            console.log(recipeContainerPos.top)
             window.scrollTo({
-                top: recipeContainerPos.top + 1000,
+                top: recipeContainerPos.top + 300,
+                left: 0,
                 behavior: 'smooth'
             });
 
