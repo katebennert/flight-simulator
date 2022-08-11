@@ -140,9 +140,6 @@ select > option {
     font-family: 'Roboto Mono', monospace;
     font-size: 13px;
     position: relative;
-    padding-top: 5px;
-    padding-left: 5px;
-    padding-right: 5px;
   }
 
   #recipe-btn {

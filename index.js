@@ -1,5 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
 
+    function removeAllChildNodes(parent) {
+        while (parent.firstChild) {
+            parent.removeChild(parent.firstChild);
+        }
+    }
+
     const beerForm = document.querySelector(".find-a-beer-form");
     beerForm.addEventListener("submit", fetchBeers);
 
@@ -87,11 +93,18 @@ document.addEventListener("DOMContentLoaded", () => {
         .then((resp) => resp.json())
         .then((beerData) => {
             if(beerData[0]) {
+                removeAllChildNodes(document.querySelector("#beer-recipe-container"));
+                removeAllChildNodes(document.querySelector("#beer-results-container"));
+                // removes unhide class from recipe container
+                document.querySelector("#beer-recipe-container").setAttribute("class", "");
                 for (let beer of beerData) {
                     buildABeer(beer);
                     console.log(beer);
                 }
             } else {
+                document.querySelector("#beer-recipe-container").setAttribute("class", "");
+                removeAllChildNodes(document.querySelector("#beer-recipe-container"));
+                removeAllChildNodes(document.querySelector("#beer-results-container"));
                 console.log("Your perfect beer doesn't exist (yet). Try again or try our random beer generator!");
             }
         });
@@ -119,6 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const beerName = document.createElement("h1");
         beerName.innerText = `${beer.name}`;
         const beerTagLine = document.createElement("h3");
+        beerTagLine.setAttribute("style", "font-family: 'Roboto Mono', monospace;");
         beerTagLine.innerText = `${beer.tagline}`;
         const beerDescription = document.createElement("p");
         beerDescription.innerText = `${beer.description}`;
@@ -138,9 +152,9 @@ document.addEventListener("DOMContentLoaded", () => {
         beerResultsContainer.appendChild(flipCard);
         flipCard.appendChild(flipCardInner);
         flipCardInner.appendChild(flipCardFront);
-        flipCardFront.append(beerImg, beerName);
+        flipCardFront.append(beerImg, beerName, beerTagLine);
         flipCardInner.appendChild(flipCardBack);
-        flipCardBack.append(beerTagLine, beerDescription, h4, ul);
+        flipCardBack.append(beerDescription, h4, ul);
         for (let food of beer.food_pairing) {
             let li = document.createElement("li");
             li.innerText = `${food}`;
@@ -150,6 +164,8 @@ document.addEventListener("DOMContentLoaded", () => {
     
 
         function buildRecipeCard(e) {
+            removeAllChildNodes(document.querySelector("#beer-recipe-container"));
+
             const beerRecipeContainer = document.querySelector("#beer-recipe-container");
             beerRecipeContainer.setAttribute("class", "unhide-recipe-container");
 
@@ -228,16 +244,13 @@ document.addEventListener("DOMContentLoaded", () => {
             
             // gets position of beer recipe container
             let recipeContainerPos = beerRecipeContainer.getBoundingClientRect();
-            console.log(recipeContainerPos.top)
             window.scrollTo({
-                top: recipeContainerPos.top + 300,
+                top: recipeContainerPos.bottom,
                 left: 0,
                 behavior: 'smooth'
             });
 
         }
     }
-
-        
     
 })
