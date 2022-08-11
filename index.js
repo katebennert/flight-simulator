@@ -22,9 +22,6 @@ document.addEventListener("DOMContentLoaded", () => {
         let abvLow = 0;
         let abvHigh = 0;
 
-        // darkest beer = 390 ebc
-        // bitterest beer = 1157 ibu
-
         switch (colorSelection) {
             case "pale":
                 ebcLow = 0;
@@ -93,19 +90,20 @@ document.addEventListener("DOMContentLoaded", () => {
         .then((resp) => resp.json())
         .then((beerData) => {
             if(beerData[0]) {
+                removeAllChildNodes(document.querySelector("#message-container"));
                 removeAllChildNodes(document.querySelector("#beer-recipe-container"));
                 removeAllChildNodes(document.querySelector("#beer-results-container"));
                 // removes unhide class from recipe container
                 document.querySelector("#beer-recipe-container").setAttribute("class", "");
-                for (let beer of beerData) {
+                beerData.forEach(beer => {
                     buildABeer(beer);
-                    console.log(beer);
-                }
+                });
             } else {
                 document.querySelector("#beer-recipe-container").setAttribute("class", "");
+                removeAllChildNodes(document.querySelector("#message-container"));
                 removeAllChildNodes(document.querySelector("#beer-recipe-container"));
                 removeAllChildNodes(document.querySelector("#beer-results-container"));
-                console.log("Your perfect beer doesn't exist (yet). Try again or try our random beer generator!");
+                handleNoResults();
             }
         });
     }
@@ -131,15 +129,20 @@ document.addEventListener("DOMContentLoaded", () => {
         // creating html elements for beer info
         const beerName = document.createElement("h1");
         beerName.innerText = `${beer.name}`;
+
         const beerTagLine = document.createElement("h3");
         beerTagLine.setAttribute("style", "font-family: 'Roboto Mono', monospace;");
         beerTagLine.innerText = `${beer.tagline}`;
+
         const beerDescription = document.createElement("p");
         beerDescription.innerText = `${beer.description}`;
+
         const h4 = document.createElement("h4");
         h4.innerText = "Food Pairings:"
+
         const ul = document.createElement("ul");
         ul.setAttribute("id", "food-pairing-list");
+
         const recipeBtn = document.createElement("button");
         recipeBtn.setAttribute("class", "btn");
         recipeBtn.setAttribute("id", "recipe-btn");
@@ -251,6 +254,19 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
         }
+    }
+    
+    function handleNoResults() {
+        const noResults = document.createElement("h1");
+        noResults.innerText = "Your perfect beer doesn't exist (yet). Try again or try our random beer generator!";
+        const messageContainer = document.querySelector("#message-container");
+        // messageContainer.appendChild(noResults);
+
+        const randomButton = document.createElement("button");
+        randomButton.setAttribute("id", "random-btn");
+        randomButton.innerText = "Find Me A Beer";
+
+        messageContainer.append(noResults, randomButton);
     }
     
 })
