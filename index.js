@@ -152,12 +152,6 @@ document.addEventListener("DOMContentLoaded", () => {
         function buildRecipeCard(e) {
             const beerRecipeContainer = document.querySelector("#beer-recipe-container");
             beerRecipeContainer.setAttribute("class", "unhide-recipe-container");
-            // get's position of beer recipe container
-            let recipeContainerTop = window.scrollY + beerRecipeContainer.getBoundingClientRect().top;
-            window.scroll({
-                top: recipeContainerTop,
-                behavior: 'smooth'
-            });
 
             const recipeName = document.createElement("h1");
             recipeName.innerText = `${beer.name}`;
@@ -230,6 +224,13 @@ document.addEventListener("DOMContentLoaded", () => {
             const brewersTip = document.createElement("p");
             brewersTip.innerText = `Brewer's Tip: ${beer.brewers_tips}`;
             beerRecipeContainer.appendChild(brewersTip);
+            
+            // gets position of beer recipe container
+            let recipeContainerPos = beerRecipeContainer.getBoundingClientRect();
+            window.scrollTo({
+                top: recipeContainerPos.top + 1000,
+                behavior: 'smooth'
+            });
 
         }
     }
