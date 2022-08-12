@@ -260,13 +260,31 @@ document.addEventListener("DOMContentLoaded", () => {
         const noResults = document.createElement("h1");
         noResults.innerText = "Your perfect beer doesn't exist (yet). Try again or try our random beer generator!";
         const messageContainer = document.querySelector("#message-container");
-        // messageContainer.appendChild(noResults);
 
         const randomButton = document.createElement("button");
         randomButton.setAttribute("id", "random-btn");
-        randomButton.innerText = "Find Me A Beer";
+        randomButton.innerText = "Bar Tender's Choice";
+        randomButton.addEventListener("click", fetchRandomBeer);
 
-        messageContainer.append(noResults, randomButton);
+        messageContainer.append(noResults, randomButton); 
+    }
+
+    function fetchRandomBeer(e) {
+        return fetch(`https://api.punkapi.com/v2/beers/random`)
+        .then((resp) => resp.json())
+        .then((randomBeerData) => {
+            randomBeerData.forEach(beer => {
+                buildABeer(beer);
+                let beerResultsContainer = document.querySelector("#beer-results-container");
+                let beerResultsPos = beerResultsContainer.getBoundingClientRect();
+                window.scrollTo({
+                    top: beerResultsPos.bottom,
+                    left: 0,
+                    behavior: 'smooth'
+                });
+                document.querySelector("#random-btn").innerText = "Another One";
+            });
+        })
     }
     
 })
