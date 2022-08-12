@@ -98,6 +98,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 beerData.forEach(beer => {
                     buildABeer(beer);
                 });
+                const beerResultsContainer = document.querySelector("#beer-results-container");
+                const beerResultsPos = beerResultsContainer.getBoundingClientRect();
+                window.scrollTo({
+                    top: beerResultsPos.top,
+                    left: 0,
+                    behavior: 'smooth'
+                });
             } else {
                 document.querySelector("#beer-recipe-container").setAttribute("class", "");
                 removeAllChildNodes(document.querySelector("#message-container"));
@@ -109,6 +116,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function buildABeer(beer) {
+
+        const beerResultsContainer = document.querySelector("#beer-results-container");
+
         const flipCard = document.createElement("div");
         flipCard.setAttribute("class", "flip-card");
         
@@ -148,8 +158,6 @@ document.addEventListener("DOMContentLoaded", () => {
         recipeBtn.setAttribute("id", "recipe-btn");
         recipeBtn.innerText = "View Recipe";
         recipeBtn.addEventListener("click", buildRecipeCard);
-        
-        const beerResultsContainer = document.querySelector("#beer-results-container");
 
         // appending elements to the flip cards in beer results container
         beerResultsContainer.appendChild(flipCard);
